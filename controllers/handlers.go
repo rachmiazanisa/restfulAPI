@@ -25,7 +25,7 @@ func DBHome(c *gin.Context) {
 
 	var name string
 
-	
+	//Change number in QueryRow for the id
 	err = stmtOut.QueryRow(3).Scan(&name)
 	if err != nil{
 		panic(err.Error())
@@ -46,6 +46,7 @@ func DBDelete(c *gin.Context) {
 		panic(err.Error())
 	}
 	defer stmtDel.Close()
+	//Change number in QueryRow , number => id
 	_, err = stmtDel.Exec(6)
 	if err != nil{
 		panic(err.Error())
@@ -65,6 +66,7 @@ func DBUpdate(c *gin.Context) {
 		panic(err.Error())
 	}
 	defer stmtUpd.Close()
+	//Change ("name",number), number => id
 	_, err = stmtUpd.Exec("mamat",6)
 	
 }
