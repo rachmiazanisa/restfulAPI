@@ -51,6 +51,7 @@ func DBDelete(c *gin.Context) {
 	if err != nil{
 		panic(err.Error())
 	}
+	c.JSON(http.StatusOK, gin.H{"Status":"Deleted"})
 }
 //Function Update Data by id
 func DBUpdate(c *gin.Context) {
@@ -66,9 +67,12 @@ func DBUpdate(c *gin.Context) {
 		panic(err.Error())
 	}
 	defer stmtUpd.Close()
-	//Change ("name",number), number => id
-	_, err = stmtUpd.Exec("mamat",6)
-	
+	//Change "name",number | number => id
+	name := "mamat"
+	_, err = stmtUpd.Exec(name,6)
+	c.JSON(http.StatusOK, gin.H{
+		"Name": name,
+		"Status":"Updated"})
 }
 //Function Insert Data
 func DBInsert(c *gin.Context){
@@ -78,8 +82,9 @@ func DBInsert(c *gin.Context){
 		panic(err.Error())
 	}
 	defer db.Close()
-
-	stmtIns, err := db.Prepare("INSERT INTO user VALUES('','rachmi',23)")
+	name := "rachmi"
+	umur := 23
+	stmtIns, err := db.Prepare("INSERT INTO user VALUES('','name',umur)")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -89,4 +94,8 @@ func DBInsert(c *gin.Context){
 	if err != nil {
 		panic(err.Error())
 	}
+	c.JSON(http.StatusOK, gin.H{
+		"Name" : name,
+		"Umur" : umur,
+		"Status":"Updated"})
 }
